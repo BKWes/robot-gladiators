@@ -9,22 +9,19 @@ var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney = 10;
 
-// console.log(playerName, playerHealth, playerAttack);
 
 var enemyNames = ["Roberto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
 // display enemyNames 
-// for(var i = 0; i < enemyNames.length; i++) {
-//     console.log(enemyNames[i]);
-//     console.log(i);
-//     console.log(enemyNames[i] + " is at " + i + " index");
-// }
+console.log(enemyNames);
+console.log(enemyNames.length);
 
+// fight function
 var fight = function(enemyName) {
     // repeat and execute as long as enemy is alive
-    while(playerHealth > 0 && enemyHealth > 0) {
+    while (playerHealth > 0 && enemyHealth > 0) {
     // ask the player if they want to fight or skip
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
     
@@ -53,8 +50,7 @@ var fight = function(enemyName) {
             // award player prize money
             playerMoney = playerMoney + 20;
             break;
-        }
-        else {
+        } else {
             window.alert(enemyName + " still has " + enemyHealth + " health left.");
         }
 
@@ -71,20 +67,22 @@ var fight = function(enemyName) {
         else {
             window.alert(playerName + " still has " + playerHealth + " health left.");
         }
-  };
-}
+  }
+};
 
 for (var i = 0; i < enemyNames.length; i++) {
+    // if the player is still alive, keep fighting
     if (playerHealth > 0) {
         window.alert("Welcome to Robot Gladiators! Round " + ( i + 1 ) );
         
+        // pick new enemy to fight based on index of array
         var pickedEnemyName = enemyNames[i];
         
         // reset enemy health
         enemyHealth = 50;
         
         fight(pickedEnemyName);
-    }
+    } 
     else {
         window.alert("You have lost your robot in battle! Game Over!");
         break;
