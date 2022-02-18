@@ -7,14 +7,18 @@
 
 console.log(enemyInfo);
 
-// fight function
-var fight = function(enemy) {
-    // repeat and execute as long as enemy is alive
-    while (playerInfo.health > 0 && enemy.health > 0) {
+var fightOrSkip = function () {
     // ask the player if they want to fight or skip
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+    promptFight = promptFight.toLowerCase();
+
+    //conditional recursive function
+    if (!promptFight) {
+        window.alert("You need to provide a valid answer! Please try again.");
+        return fightOrSkip(); 
+    }
     
-    if (promptFight === "skip" || promptFight === "SKIP") {
+    if (promptFight === "skip") {
         // confirm player wants to skip
         var confirmSkip = window.confirm("Are you sure you'd like to quit?");
         
@@ -24,10 +28,20 @@ var fight = function(enemy) {
             // subtract money from player for skipping
             playerInfo.money = Math.max(0, playerInfo.money - 10);
             console.log("playerMoney", playerInfo.money);
-            break;
+            return true;
         }
     }
+    return false;
+}
 
+// fight function
+var fight = function(enemy) {
+    // repeat and execute as long as enemy is alive
+    while (playerInfo.health > 0 && enemy.health > 0) {
+        if (fightOrSkip()) {
+            break;
+        }
+    
         // generate random damage value based on player's attack power
         var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
 
@@ -41,7 +55,6 @@ var fight = function(enemy) {
             window.alert(enemy.name + " has died!");
             // award player prize money
             playerInfo.money = playerInfo.money + 20;
-            break;
         } else {
             window.alert(enemy.name + " still has " + enemy.health + " health left.");
         }
@@ -55,13 +68,12 @@ var fight = function(enemy) {
 
         if (playerInfo.health <= 0) {
             window.alert(playerInfo.name + " has died!");
-            break;
         }
         else {
             window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
         }
+    }
   }
-};
 
 var startGame = function() {
     playerInfo.reset();
